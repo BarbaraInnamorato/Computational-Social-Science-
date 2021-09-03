@@ -1,1 +1,1 @@
-# Computational-Social-Science @Unitn
+# Computational Social Science @Unitn
