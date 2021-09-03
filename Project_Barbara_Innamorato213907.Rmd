@@ -1,0 +1,633 @@
+---
+title: "An exploratory analysis on Biocapacity in Europe"
+author: "Barbara Innamorato 213907"
+date: "9/8/2020"
+output: html_document
+---
+```{r setup, include=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=10, fig.height=6) 
+```
+# ABSTRACT
+During latest years a human problem that got more and more interest in politics and in social behaviour regards the ecological sustainability and the production of pollution. The use of natural resources continues to grow since '90s resulting in a negative impact on the environment and human health. This negative effect has to do with many factors related not only to nature but also to human behaviour in all of its aspects. To take care about our earth, social movements born for the climate and environment protection and are nowadays widespread all over the world since everything we do leaves a Footprint. \
+
+The aim of this exploratory analysis is to show ecological footprint in a broader context, combining all the ecological threats we face today. Climate change, deforestation, overgrazing, collapse of fisheries, food insecurity and rapid species extinction are all part of a general problem. This information could be used by government agencies, policy makers and advocacy groups to have a clear understanding of which are the dimensions to be tackled first to advance wortwhile change, including transformation change at a local, national and global scales.\
+
+It is important to work together when facing this kind of events that affects all countries all over the world because humanity is simply demanding more from the Earth than it can supply. By focusing on the single problem, we can address all of its symptoms, rather than solving one problem at the expense of another.\
+
+
+# GENERAL FRAMEWORK
+Over the past 30 years the science of sustainability has emerged as an important field for addressing the challenges arising from human-nature interactions. The science of sustainability is a "solution-oriented" discipline that studies the complex relationship between nature and humanity".\
+
+### Ongoing Sustainability Agreements 
+Following the "20-20-20" aggrement of 1996, in 2014 UE fixed goals to be reached in 2030 consistently with the long-term perspective outlined in the roadmap to move from a competitive low-carbon economy by 2050.\
+The Paris Agreement establishes a global framework to avoid dangerous climate change by limiting global warming well below 2ºC and continuing efforts to limit it to 1.5ºC. It also aims to strengthen the capacity of countries to address the impacts of climate change and to support them in their efforts. The Paris Agreement is the first universal and legally binding agreement on climate change, adopted at the Paris Climate Conference in December 2015.\
+Among the 190 parties to the Paris Agreement there are EU and its Member States. The EU ratified the Agreement on 5 October 2016, thus allowing its entry into force on 4 November 2016. In order for the agreement to enter into force, at least 55 countries representing at least 55% of global emissions had to deposit their instruments of ratification.  Countries submitted national master plans for climate action. The agreement maps the way forward for further action.\
+
+Talking about ecological sustainability, we refer to consequences of our daily activities as eating or washing. It is not a case that ecological footprint is guided by a simple question: how much of the regenerative capacity of the biosphere carries out human activity or a production process? Or more specifically: how much regenerative capacity of the planet (or of a region) does a certain activity require from nature?\
+During the United Nations Conference on Environment and Development in Rio in 1992 were asked more quality and availability of data about sustainability obtaining then many reference indicators with the intent of guide politics. These indicators will be briefly explained in the next session of data description in the context of Biocapacity and Ecological Footprint.\
+
+The ecological footprint (EF) puts together principles about sustainability and accountability which are then applied to our lives on Earth to measure the biocapacity. The unit of measure for Ecological Footprint is the global hectare (gha) which represents a biologically productive hectare with world average biological productivity for a given year. As world productivity varies slightly from year to year, the value of a global hectare can vary slightly from year to year.\
+
+Biocapacity refers to the ensamble of ecological services provided by local ecosystems, estimated through the quantification of the area of ecologically productive land that is present within the region in question (Europe in this project). Biocapacity is a parameter that does not depend on natural conditions alone.\
+
+They will be made comparison between different years about resource consumption to see how european countries contribute the ecological footprint and biocapacity, then we will look for common patterns between European countries in managing resources for biocapacity. \
+
+Research questions are strongly related to the interaction between human behaviour and biocapacity in order to evaluate if ongoing policies are efficient:\
+•	**What affect most biocapacity & How european countries relate with biocapacity?** \
+•	**Are there common patterns between european countries in improving the ecological footprint on biocapacity?**\
+
+# METHODOLOGY
+To analyse ecological footprint it has been used a 2019 datataset collected by *National Footprint Account (NFA)* managed by *Global Footprint* from 2003, aiming to reveal connections between human consumption and geographical/political characteristics.
+Data used in this study are structured data, so that the analysis didn't present any particular difficulty in the collection and in the processing stages, except for the management of all the years, all the countries and records included in the dataset.\
+This research focuses on european countries analysing in two different years biocapacity changing, CO2 emission (as the most impactful factor of biocapacity) and some indicators used to compute the Ecological Footprint.\
+
+The focus on Europe as a reference country and CO2 emission is due to the fact that that during ‘90s, agreements were made with goals for 2020 aimed at reducing CO2 emissions. The European Commission set EU targets for 2020 for climate change reduction and energy sustainability; the targets set relate to the reduction of greenhouse gas emissions (primary CO2) by 20% compared to 1990, 20% of the energy needs derived from renewable sources, 20% increase in energy efficiency (target mentioned with the acronym 20-20-20 ). Europe alone exploits 20% of the earth's biocapacity: from 1961 to 2016 the ecological footprint of the EU member states grew, from 1.6 to 2.3 global hectares (gha) making Europe an ecological debtor. \
+
+Unfortunately, most recent data available in the NFA dataset date back to 2016, but it will still be possible to observe, through a visualisation, if agreements were respected by European countries getting to a better resource's management.\
+
+To answer to research questions, two unsupervised useful tools are used to grasp a relationships between variables and entities: the Principal Component Analysis (carried out on Rattle and RStudio) to analyze how European countries relate to the six variables used to calculate the footprint; then a Cluster analysis (carried out on Rattle) to capture common patterns between countries .\
+
+
+### Data description
+Dataset is available on [data.world][id] called "NFA 2019 public_data.csv".\
+The dataset provides Ecological Footprint data for years 1961-2016 in global hectares (gha). According to the Global Footrpint definition, Ecological Footprint (EF) is a measure of how much area of biologically productive land and water an individual, population, or activity requires to produce all the resources it consumes and to absorb the waste it generates. The Ecological Footprint is measured in global hectares (gha). Ecological Footprint generally refers to the Ecological Footprint of consumption (rather than only production, so it refers to the use of goods and services).To ensure consistent results, each edition of NFA dataset provides updated results for the entire timeline available from 1961 to the current year of NFA data. Latest update was in 2019 and accounts for data until 2016. \
+
+The six records included in this data are total and per capita national biocapacity (BiocapPerCapGHA)(BiocapTotGHA), ecological footprint of consumption  (EFConsPerCap)(EFConsTotGHA), ecological footprint of production (EFProdPerCap)(EFProdTot) and total area (AreaPerCap)(AreaTotHA) in hectares. We will use only one of these records. For each record, six factors are considered to determine the footprint and to each record is assigned a Quality Score that represent the level of trustworthness about data. \
+
+```{r load data}
+df <- read.csv("NFA_2019.csv") # 72186 12
+summary(df)
+```
+
+The six variables are:\
+```{r columns explanation, echo=FALSE}
+names(df[5:10])
+```
+where\
+• *crop_land*: cultivated land is the most bioproductive of all types of land use and consists of areas used to produce food for human consumption, feed for livestock, oil crops and rubber. The cropland footprint includes plant products assigned to feed blends for livestock and aquaculture and those used for fibers and materials.\
+
+• *grazing_land*: pasture is used to raise livestock for meat, dairy, leather and wool products. Computations about grazing land footprint are done by comparing the amount of livestock feed available in a country with the amount of feed required for all livestock that year, with the rest of the feed demand assumed to come from pasture.\
+
+• *forest_land*: two services are provided by forest land. The first is the Forest Product Footprint, which is calculated based on the amount of timber, pulp, wood products and firewood consumed by a country on an annual basis. It also includes the carbon footprint, which represents carbon dioxide emissions from burning fossil fuels. The carbon footprint also includes the carbon embedded in imported goods. It is the area needed to sequester these carbon emissions. The carbon footprint component of the ecological footprint is calculated as the amount of forest land needed to absorb these carbon dioxide emissions. Currently, the carbon footprint is the largest portion of humanity's footprint.\
+
+• *fishing_ground*: the footprint of the fishing areas is calculated based on estimates of the maximum sustainable catch for a variety of fish species. This includes fish caught and used in aquaculture feed mixes.\
+
+• *built_up_land*: the footprint of the built land is calculated based on the area of land covered by human infrastructures like transport, housing, industrial structures and reservoirs for hydroelectric energy. Built-up land can occupy what previously would have been farmland.\
+
+• *carbon*: The carbon Footprint measures CO2 emissions associated with the use of fossil fuel. In Ecological Footprint accounts, these amounts are converted into biologically productive areas necessary for absorbing this CO2. The carbon Footprint is added to the Ecological Footprint because it is a competing use of bioproductive space, since increasing CO2 concentrations in the atmosphere is considered to represent a build-up of ecological debt. Some carbon Footprint assessments express results in tonnes released per year, without translating this amount into area needed to sequester it.\ 
+
+• *total*: global hectares that a country needs for its consumptions and wastes
+
+```{r clean data, results="hide", echo=FALSE}
+str(df) 
+
+# convert in the correct format
+df[,5:11] <- lapply(df[,5:11], as.numeric) # numeric variables
+df[,2:3] <- lapply(df[,2:3], as.factor) # factor
+str(df, 5)
+any(is.na(df)) #FALSE
+```
+
+\
+Now, only european countries are (manually) selected and two dataframes are created corresponding to 1990 and 2016 years. In 1996 european countries submitted the agreement "Energetic Strategy 20-20-20" and 2016 is the most recent year. \
+Then another subset is created for one of the six records: the **EFConsTotGHA** which represents the total ecologica footprint of consumptions (again in 1990 and 2016 for comparisons) of each european country.  \
+```{r europe selection, echo=TRUE, results='hide'}
+europe <- df[df$country=="Austria"|df$country=="Belgio"|df$country=="Bulgaria"|df$country=="Cechia"|df$country=="Cyprus"|df$country=="Croazia"|df$country=="Danimarca"|df$country=="Estonia"|df$country=="Finland"|df$country=="France"|df$country=="Germany"|df$country=="Greece"|df$country=="Ireland"|df$country=="Italy"|df$country=="Latvia"|df$country=="Albania"|df$country=="Luxemburg"|df$country=="Malta"|df$country=="Netherlands"|df$country=="Poland"|df$country=="Portugal"|df$country=="Romania"|df$country=="Slovakia"|df$country=="Slovenia"|df$country=="Spain"|df$country=="Sweden"|df$country=="Hungary" | df$country=="United Kingdom" | df$country=="Croatia",] # 8808 12
+
+europe1990 <- europe[europe$year=="1990",] # 192 12
+europe2016 <- europe[europe$year=="2016",] # 192 12
+
+cons_tot1990 <- europe1990[europe1990$record=="EFConsTotGHA",] # 19 12
+cons_tot2016 <- europe2016[europe2016$record=="EFConsTotGHA",] # 24 12 
+
+```
+
+```{r manipulation, echo=FALSE, results='hide'}
+rownames(cons_tot2016) <- NULL
+rownames(cons_tot1990) <- NULL
+```
+\
+To get a feeling of the changing in ecological footprint, we can make a comparison between consumption in global
+hectares in 1990 and in 2016 in Europe using a slope chart \
+```{r slope chart, echo=FALSE, fig.align='center', message=FALSE, warning=FALSE}
+library(ggplot2)
+sub <- data.frame(cons_tot2016$country, cons_tot2016$total)
+sub1 <- data.frame(cons_tot1990$country, cons_tot1990$total)
+
+colnames(sub) <- c("country", "Cons2016")
+colnames(sub1) <- c("country", "Cons1990")
+
+sub2 <- merge(sub, sub1, by = "country")
+colnames(sub2) <- c("country", "2016", "1990")
+sub2$class <- ifelse((sub2$`2016` - sub2$`1990`) < 0, "red", "green")
+
+p <- ggplot(sub2) + geom_segment(aes(x=1, xend=2, y=`1990`, yend=`2016`, col=class), size=.75, show.legend=F) + 
+  geom_vline(xintercept=1, linetype="dashed", size=.1) + 
+  geom_vline(xintercept=2, linetype="dashed", size=.1) +
+  scale_color_manual(labels = c("Up", "Down"), 
+                     values = c("green"="#00ba38", "red"="#f8766d")) +  # color of lines
+  labs(x="", y="Total Hectares (GHA)", title="Ecological Footprint of Consumption", subtitle = "A comparison in Europe") +  # Axis labels
+  xlim(.5, 2.5) + ylim(10000,(1.1*(max(sub2$`2016`, sub2$`1990`))))  # X and Y axis limits
+
+
+
+left_label <- paste(sub2$country, sub2$`1990`  ,sep=", ")
+right_label <- paste(sub2$country, sub2$`2016`,sep=", ")
+p <- p + geom_text(label=left_label, y=sub2$`1990`, x=rep(1, NROW(sub2)), hjust=1.1,size=2, check_overlap = TRUE)
+p <- p + geom_text(label=right_label, y=sub2$`2016`, x=rep(2, NROW(sub2)), hjust=-0.1, size=2, check_overlap = TRUE)
+p <- p + geom_text(label="1990", x=1, y=1.1*(max(sub2$`1990`, sub2$`2016`)), hjust=1.2, size=5)  # title
+p <- p + geom_text(label="2016", x=2, y=1.1*(max(sub2$`1990`,sub2$`2016`)), hjust=-0.1, size=5)  # title
+
+
+p + theme(panel.background = element_blank(), 
+          panel.grid = element_blank(),
+          axis.ticks = element_blank(),
+          axis.text.x = element_blank(),
+          panel.border = element_blank(),
+          plot.margin = unit(c(1,2,1,2), "cm"))
+
+```
+\
+From the graph we see the consumption footprint (in gha) of each nation in the two years considered. It is clear that while for some countries there has been an improvement in the exploitation of resources (red line) and so that they faced a reduction in the Ecological Footprint, for other countries this has not happen (green line: biocapacity deficit). Countries marked in red were able to improve their biocapacity reducing the gha needed for daily activities and consumptions. All countries marked in green for which needed land is higher in 2016 than 1990, should be aware that to substain their request, more and more lands are needed but, unfortunately, this is not possible. They will continue to emit more CO2 emissions than the ecosystems that host them can absorb, they will tear more biomass from forests than they can regenerate. The biocapacity deficit depends on many factors. Eleven countries reduced their footprint while still 8 are countries with a growing EF. \
+
+Since carbon footprint is acutally the 60% of the total ecological footprint in the world, we can try to visualize with a map the carbon consumption in 1990 and 2016 to see if changing in footprint is a consequence of emission reduction (or not) as prevented by the "20-20-20" agreement. \
+
+```{r carbon map, echo=FALSE, fig.align='center',results='hide',message=FALSE, warning=FALSE} 
+library(gridExtra)
+worldmap<- map_data("world")
+ourmap_2016 <- map_data("world", region=unique(europe2016$country))
+world_2016 <- merge(ourmap_2016, europe2016, by.x = "region", by.y="country")
+worldmap_2016 <- world_2016[order(world_2016$group, world_2016$order),]
+theme_set(theme_bw())
+
+carbon_2016 <- ggplot(worldmap_2016, aes(x=long, y=lat, group=group)) + 
+  geom_polygon(aes(fill=carbon), color="black") +  
+  scale_fill_gradient(low="green",high="firebrick") +
+  ggtitle("2016 Europe Carbon Footprinte") +
+  coord_map("ortho",orientation=c(30,20,0))
+
+#carbon_2016
+
+ourmap_1990 <- map_data("world", region=unique(europe1990$country))
+world_1990 <- merge(ourmap_1990, europe1990, by.x = "region", by.y="country")
+worldmap_1990 <- world_1990[order(world_1990$group, world_1990$order),]
+theme_set(theme_bw())
+
+carbon_1990 <- ggplot(worldmap_1990, aes(x=long, y=lat, group=group)) + 
+  geom_polygon(aes(fill=carbon), color="black") +  
+  scale_fill_gradient(low="green",high="firebrick") +
+  ggtitle("1990 Europe Carbon Footprint") +
+  coord_map("ortho",orientation=c(30,20,0))
+
+#carbon_1996
+grid.arrange(carbon_1990,carbon_2016, nrow=1, ncol=2)
+
+```
+\
+Unfortunately, in the 1990 dataset there are some missing countries so they are not displayed in the map. Same for 2016 in which Switzerland and Check Republic are missing. Even though, we have an idea about CO2 emission in 1990 and 2016. It is clear that policies adopted by the European countries have had results: in 2016 there are no more countries marked in red (except Malta), meaning that all countries put efforts in reducing greenhous gases emission and, as a consequence, this had a good effect on the EF for some countries (like Ireland, Bulgaria and Hugary). The reduction of carbon footprint in so many countries implies that countreis are now aware about negative effects of greenhous gas emission, so they are all trying to reduce them. \
+
+For a better understanding of how carbon affect biocapacity, we can use a matrix correlation showing the correlation between the six indicators used to quantify biocapacity:\
+```{r prepraing csv, echo=FALSE}
+# Preparing data 
+
+rownames(cons_tot2016) <- cons_tot2016$country
+cons_tot2016$country <- NULL
+cons_tot2016$country_code <- NULL
+cons_tot2016$record <- NULL
+
+rownames(cons_tot1990) <- cons_tot1990$country
+cons_tot1990$country <-NULL
+cons_tot1990$country_code <- NULL
+cons_tot1990$record <- NULL
+```
+
+```{r csv export, echo=FALSE, message=FALSE, warning=FALSE}
+write.csv(europe2016, file="europe2016.csv",  dec=".", na="NA", row.names=T, col.names=T)
+write.csv(europe1990, file="europe1990.csv",  dec=".", na="NA", row.names=T, col.names=T)
+write.csv(cons_tot2016, file="cons_tot2016.csv",  dec=".", na="NA", row.names=T, col.names=T)
+write.csv(cons_tot1990, file="cons_tot1990.csv",  dec=".", na="NA", row.names=T, col.names=T)
+```
+
+```{r correletion matrix, echo=FALSE, fig.align="center", message=FALSE, warning=FALSE}
+library(corrplot)
+library(ggcorrplot)
+library(rattle)
+rattle()
+crv$seed <- 42 
+fname         <- "file:///Users/barbara/Desktop/GlobalFootprintData/cons_tot2016.csv" 
+crs$dataset <- read.csv(fname,
+			na.strings=c(".", "NA", "", "?"),
+			strip.white=TRUE, encoding="UTF-8")
+
+```
+
+```{r rattle code, echo=FALSE, results='hide'}
+#nobs=22 train=15 validate=3 test=4
+set.seed(crv$seed)
+crs$nobs <- nrow(crs$dataset)
+crs$train <- sample(crs$nobs, 0.7*crs$nobs)
+
+crs$nobs %>%
+  seq_len() %>%
+  setdiff(crs$train) %>%
+  sample(0.15*crs$nobs) ->
+crs$validate
+
+crs$nobs %>%
+  seq_len() %>%
+  setdiff(crs$train) %>%
+  setdiff(crs$validate) ->
+crs$test
+
+# The following variable selections have been noted.
+
+crs$input     <- c("X", "crop_land", "grazing_land",
+                   "forest_land", "fishing_ground", "built_up_land",
+                   "carbon")
+
+crs$numeric   <- c("crop_land", "grazing_land", "forest_land",
+                   "fishing_ground", "built_up_land", "carbon")
+
+crs$categoric <- "X"
+
+crs$target    <- "total"
+crs$risk      <- NULL
+crs$ident     <- NULL
+crs$ignore    <- c("year", "QScore")
+crs$weights   <- NULL
+```
+
+```{r rattle correlation, echo=TRUE, fig.align="center"}
+library(corrplot, quietly=TRUE)
+crs$cor <- cor(crs$dataset[crs$train, crs$numeric], use="pairwise", method="pearson")
+
+# Order the correlations by their strength.
+crs$ord <- order(crs$cor[1,])
+crs$cor <- crs$cor[crs$ord, crs$ord]
+print(crs$cor)
+
+# Display the actual correlations.
+corrplot(crs$cor, mar=c(0,0,1,0))
+title(main="Correlation cons_tot2016.csv using Pearson",
+    sub=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+```
+\
+Correlation between carbon and variables related to land exploitation is always positive (in particular with fishing ground and grazing land) suggesting that an increase in carbon consumption will have an effect on land exploitation for fishing and grazing. Forest land is, as expected, positively correlated with carbon and grazing land, since it refers to both emission and land subtracted to forest. It is noticeable that crop land is positively correlated to almost all variables except with built up land 
+that takes up space since more land for infrastructures implies less space for crops. Obviously, land related variabeles are all positively correlated influencing each other. Highest correlations are almost all related to carbon, so a reduction in greenhouse gases will have a positive effect on all other factors. \
+Looking the matrix we can say that if we really want to take enhance biocapacity, it is not enough to take care one single factor at time: they have to be considered as a unique entity. \
+
+### Q1. What affect most biocapacity & How european countries relate with biocapacity? 
+Principal Component Analysis (PCA) is a dimension reduction techinque that finds a set of components that taken together account for as much variance within a dataset. PCA allows to answer the questions since with this technique it is possible to idetify not only which of the six variables has a big imapact on EF consumption, but also how countries relate with these six factors.
+Even if all variables are expressed in the same unit of measure (gha), to apply PCA we rescale variables.\
+
+Before performing PCA, we look for countries with higher EF in 2016:\
+```{r EF up and down, echo=FALSE, results="hide"}
+cons_tot2016$EF <- ifelse(cons_tot2016$total  > mean(cons_tot2016$total), "Upper", "Lower")
+up <- subset(cons_tot2016, subset=cons_tot2016$EF=="Upper")
+
+down <- subset(cons_tot2016, subset=cons_tot2016$EF=="Lower")
+```
+```{r countries, echo=FALSE}
+coun = data.frame(rownames(up), rownames(down))
+colnames(coun) <- c("EF Over Mean","EF Under  Mean")
+coun
+```
+
+\
+Using mean as a partition criteria for the total consumption footprint and adding a new column in the dataset, we
+see in the column "EF Over Mean" countries for which the amounts of globa hectares needed to rigenerate the ecosystem was over the
+mean in 2016. Among these there are Cyprus and Finland which, according to European Commission report of 
+2016, exceeded their annual emission allocations being then constrained to acquire them from other. The fact that 
+their national footprints was over the mean means that they were in debt to the biocapacity. For countries in the "EF Under Mean" column, the ecological footprint of consumption was under the mean in 2016 meaning that they found a way to better manage all activities related to biocapacity. \
+Now, using Rattle, let's see which are most impactful variables. \
+
+```{r screeplot, echo=FALSE, results="hide", fig.align="center", message=FALSE, warning=FALSE}
+library(FactoMineR) # per PCA function
+library(corrplot)
+library(factoextra)
+library(rattle)
+rattle()
+crv$seed <- 42 
+fname         <- "file:///Users/barbara/Desktop/GlobalFootprintData/cons_tot2016.csv" 
+crs$dataset <- read.csv(fname,
+			na.strings=c(".", "NA", "", "?"),
+			strip.white=TRUE, encoding="UTF-8")
+
+set.seed(crv$seed)
+crs$nobs <- nrow(crs$dataset)
+crs$train <- sample(crs$nobs, 0.7*crs$nobs)
+
+crs$nobs %>%
+  seq_len() %>%
+  setdiff(crs$train) %>%
+  sample(0.15*crs$nobs) ->
+crs$validate
+
+crs$nobs %>%
+  seq_len() %>%
+  setdiff(crs$train) %>%
+  setdiff(crs$validate) ->
+crs$test
+
+# The following variable selections have been noted.
+
+crs$input     <- c("X", "crop_land", "grazing_land",
+                   "forest_land", "fishing_ground", "built_up_land",
+                   "carbon")
+
+crs$numeric   <- c("crop_land", "grazing_land", "forest_land",
+                   "fishing_ground", "built_up_land", "carbon")
+
+crs$categoric <- "X"
+
+crs$target    <- "total"
+crs$risk      <- NULL
+crs$ident     <- NULL
+crs$ignore    <- c("year", "QScore")
+crs$weights   <- NULL
+
+pc <- prcomp(na.omit(crs$dataset[, crs$numeric]), scale=TRUE, center=TRUE, tol=0)
+pc
+
+# Display a plot showing the relative importance of the components: SCREE PLOT-Rattle
+#plot(pc, main="")
+#title(main="Principal Components Importance cons_tot2016.csv",
+ #   sub=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+#axis(1, at=seq(0.7, ncol(pc$rotation)*1.2, 1.2), labels=colnames(pc$rotation), lty=0)
+
+
+#scale_data <- scale(cons_tot2016[,2:7])
+#scale_data$EF <- ""
+#bio_pca <- prcomp(cons_tot2016[,2:7], scale=TRUE)
+#bio_pca <- princomp(scale_data) # con prcomp il biplot viene upside-down, quindi uso princomp
+#bio_pca <- PCA(cons_tot2016[,2:7], scale=T) # con prcomp il biplot viene upside-down, quindi uso princomp
+
+
+summary(pc)
+pc.svd.var <- pc$sdev^2 
+pve <- pc.svd.var/sum(pc.svd.var) 
+
+# MY SCREE PLOT + Rattle
+p <- fviz_eig(pc,
+              addlabels = T,  #aggiungo le percentuali di varianza spiegata
+              barcolor = "#F37B59",
+              barfill = "#F37B59", 
+              linecolor = "#2e4057", 
+              choice = "variance", 
+              title="Scree Plot",
+              caption=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+              
+
+p
+```
+\
+From the screeplot we see that the first two components explain round 54% of the variance in the data. Even if we are using a small dataset, this percentage of variance explained is not really enough to capture variables that most differ for footprint, so that we will look also for variables in the third component. Let's see variables in first three components evaluating 71% of the total variance in the data: \
+
+```{r coeff in components, echo=FALSE, results='hide'}
+loadings_scores <- pc$rotation[,1]     #rotation=matrice dei pesi dei fattori
+columns_scores <- abs(loadings_scores)
+columns_scores_rank <- sort(columns_scores, decreasing = T)
+top_col <- names(columns_scores_rank[1:6])
+top_col # variabili più pesanti nel primo components
+first.comp <- as.matrix(pc$rotation[top_col,1])
+
+loadings_scores2 <- pc$rotation[,2]
+columns_scores2 <- abs(loadings_scores2)
+columns_scores_rank2 <- sort(columns_scores2, decreasing = T)
+top_col2 <- names(columns_scores_rank2[1:6])
+top_col2 #variabili più pesanti nel secondo component
+second.comp <- as.matrix(pc$rotation[top_col2,2])
+
+loadings_scores3 <- pc$rotation[,3]
+columns_scores3 <- abs(loadings_scores3)
+columns_scores_rank3 <- sort(columns_scores3, decreasing = T)
+top_col3 <- names(columns_scores_rank3[1:6])
+top_col3 #variabili più pesanti nel secondo component
+third.comp <- as.matrix(pc$rotation[top_col3,3])
+
+components = data.frame(top_col, top_col2, top_col3)
+colnames(components) <- c("PC1","PC2", "PC3")
+```
+
+```{r components, echo=FALSE}
+components
+#knitr::kable(components)
+```
+
+\
+In PC1, carbon is the variable with very different values suggesting that it is in this variable that European countries differ most from each other and so that, it is considered as the variable that capture most of the variance in the dataset (with a coefficient equal to 0.58), in fact the arrow  of this variable in the biplot (below) is very long. After carbon, the second variable with a high EF consumption is forest land (with a coefficient equal to 0.47) that is carbon related but with a lower contribute to PC1 (carbon and forest land are nearby in the biplot). Regarding the second component, fishing ground (0.68) seems to be another important variables that makes countries different, being more practiced by some population than others, followed by grazing land (0.60). \
+In the third component, crop land has the highest coefficient (0.83) in PC3 suggesting that the 17% of the variancce
+explained by this component comes most from this variable. \
+Trying to interpret components:\
+• **PC1**: greenhouse gases emission \
+• **PC2**: fishing and grazing \
+• **PC3**: crop\
+
+Using a biplot we can visualize how countries relate with variables in the first two components: \
+
+```{r biplot, echo=FALSE, fig.align='center', warning=FALSE}
+# Display a plot showing the two most principal components.
+#biplot(pc, main="")
+#title(main="Principal Components cons_tot2016.csv",
+  #  sub=paste("Rattle", format(Sys.time(), "%Y-%b-%d %H:%M:%S"), Sys.info()["user"]))
+
+# do again prcomp() only for visualization issues
+library(factoextra)
+bio_pca <- prcomp(cons_tot2016[,2:7], scale=TRUE)
+fviz_pca_biplot(bio_pca,repel = T) 
+# if pc was used, on the biplot it is not possible to visualize countrie's name
+```
+\
+
+Countries placed in the top-left side of the biplot differ most with respect to PC2, so for some of them, the ecological debt is not only due to carbon but more to collapse of fisheries and grazing. Slovakia, for example, is high with respect to PC2 showing a low value on carbon. We see Estonia, Italy, Romania, Ireland and UK presenting high values on fishing ground suggesting that this activty has a great imapct on the total consumption footprint of these countries, while Netherlands, Finland, Hungary and Croatia seem to be high in grazing land, but very low on fishing ground or build up land.\
+Portugal lies nearby the axis-origin putting quite equal weight on both PC1 and PC2. Cyprus and Malta present high weights on PC1, so here the most popular activity is related to carbon and forest land. Austria is high on crop land but very low on built up land and carbon.\
+Having high values on a variable (or being high) means that a country’s footprint is determined more by that variable. \
+
+
+### Q2. Are there common patterns between european countries in improving the ecological footprint on biocapacity? 
+Answering the second research question, to study if there exist any common pattern between european countries, an unsupervised learning technique can be employed through an algorithm that minimize the within-groups variation. In this framework, Cluster Analysis and some Rattle tools can help in *segmenting* countries. With segmentation we are able to observe if countries are moving towards commong goals.  \
+Again, we allow Rattle to rescale observations. The country's segmentation is based on the variable influencing biocapacity in 2016. We are going to use the K-Means algorithm that minimize the within-cluster variation (using principal components) for a better evaluation of Europe behaviours.\
+
+Trying first a K-Means clustering with 10 clusters, it seems that 10 are too many clusters for 24 countries, in fact there were a lot of observation lying alone in the projection. According to the function, 3 is a good number of clusters corresponding to the bigger drop in the sum of the within cluster sum of squares.\
+
+```{r preparing for clustering rattle, echo=FALSE, results="hide"}
+library(rattle)
+rattle()
+
+crv$seed <- 42 
+fname         <- "file:///Users/barbara/Desktop/GlobalFootprintData/cons_tot2016.csv" 
+crs$dataset <- read.csv(fname,
+			na.strings=c(".", "NA", "", "?"),
+			strip.white=TRUE, encoding="UTF-8")
+
+
+#nobs=22 train=15 validate=3 test=4
+set.seed(crv$seed)
+
+crs$nobs <- nrow(crs$dataset)
+
+crs$train <- sample(crs$nobs, 0.7*crs$nobs)
+
+crs$nobs %>%
+  seq_len() %>%
+  setdiff(crs$train) %>%
+  sample(0.15*crs$nobs) ->
+crs$validate
+
+crs$nobs %>%
+  seq_len() %>%
+  setdiff(crs$train) %>%
+  setdiff(crs$validate) ->
+crs$test
+
+# The following variable selections have been noted.
+
+crs$input     <- c("X", "crop_land", "grazing_land",
+                   "forest_land", "fishing_ground", "built_up_land",
+                   "carbon", "total")
+
+crs$numeric   <- c("crop_land", "grazing_land", "forest_land",
+                   "fishing_ground", "built_up_land", "carbon",
+                   "total")
+
+crs$categoric <- "X"
+
+crs$target    <- "QScore"
+crs$risk      <- NULL
+crs$ident     <- NULL
+crs$ignore    <- "year"
+crs$weights   <- NULL
+
+crs$categoric <- "X"
+
+crs$target    <- "total"
+crs$risk      <- NULL
+crs$ident     <- NULL
+crs$ignore    <- c("year", "QScore")
+crs$weights   <- NULL
+
+# The following variable selections have been noted.
+
+crs$input     <- c("X", "crop_land", "grazing_land",
+                   "forest_land", "fishing_ground", "built_up_land",
+                   "carbon")
+
+crs$numeric   <- c("crop_land", "grazing_land", "forest_land",
+                   "fishing_ground", "built_up_land", "carbon")
+
+crs$categoric <- "X"
+
+crs$target    <- "total"
+crs$risk      <- NULL
+crs$ident     <- NULL
+crs$ignore    <- c("year", "QScore")
+crs$weights   <- NULL
+```
+
+```{r kmeans, echo=FALSE, results="hide"}
+
+# KMeans 
+
+# Reset the random number seed to obtain the same results each time.
+
+set.seed(crv$seed)
+
+library(reshape, quietly=TRUE)
+
+# Generate a kmeans cluster of size 2.
+crs$kmeans <- kmeans(sapply(na.omit(crs$dataset[, crs$numeric]), rescaler, "range"), 3)
+
+# Report on the cluster characteristics. 
+
+# Cluster sizes:
+paste(crs$kmeans$size, collapse=' ')
+
+# Data means:
+colMeans(sapply(na.omit(crs$dataset[, crs$numeric]), rescaler, "range"))
+
+# Cluster centers:
+crs$kmeans$centers
+
+# Within cluster sum of squares:
+crs$kmeans$withinss
+
+# Time taken: 0.00 secs
+
+#library(fpc, quietly=TRUE)
+#cluster.stats(dist(sapply(na.omit(crs$dataset[, crs$numeric]), rescaler, "range")), crs$kmeans$cluster)
+```
+```{r clust plot, echo=TRUE,fig.align="center"}
+set.seed(crv$seed)
+library(reshape, quietly=TRUE)
+cluster::clusplot(na.omit(crs$dataset[, intersect(crs$input, crs$numeric)]), crs$kmeans$cluster, color=TRUE, shade=TRUE, main='Cluster Analysis')
+```
+\
+
+```{r withinss, echo=TRUE}
+# Within cluster sum of squares:
+crs$kmeans$withinss
+
+# Cluster Size:
+crs$kmeans$size
+```
+\
+Cluster analysis with Rattle uses principal component to determine clusters. Here we use the first two components found before with PCA and we are able to identify 3 clusters. From the output we see cluster's sizes which are 9 for cluster_1, 5 for cluster_2 and 10 for cluster_3. However, the three cluster are overlapping meaning that for some countries it is difficult to place in a single cluster.\
+
+Looking at the means of each variable in each cluster, we can have a clearer idea about more impactful activites.\
+```{r cluster centers, echo=TRUE}
+# Cluster centers:
+crs$kmeans$centers
+```
+\
+In the group 1 the mean of built up land is quite high suggesting that countries falling in the first group tend to have higher values on this vairable, maybe there is an imbalance in the usage of free lands. Carbon mean, instead, is not very high in this cluster.\
+In cluster2 all variables show a high mean meaning that, even if in this cluster there are 5 States, these shoul have a very high EF consumption. Moreover, carbon and forest land averages for these countries are the highest within the clusters: these countries probably give more weight on PC1 in which, as said before, carbon and forest land capture most of the variance. However, built up land presents the highest mean so available lands for this countries is exploited most by infrastructures.  \
+Finally, in cluster3 only crop land has a quite high mean, then countries in this cluster could be the ones with more weight in PC3 in which crop land dominates. \
+
+Since in group 1 most of variables's averages (in particular carbon) are lower than other clusters, a possible rising question is: "Can we conclude that countries in the first group tend to have a lower consumption footprint on biocapacity with respect to countries in the other two clusters?". Maybe not, because while some countries are more concerned with some factors, other countries are working on different aspect and so why there are differences between means in the clusters. Moreover, forest land has a quite high mean in each cluster meaning that the production of woods and the carbon dioxide emissions from the combustion of fossil fuels are common risk factors for almost all nations.\
+
+
+\
+
+# CONCLUSION
+The analysis leads to some curious results. Even if it is difficult in this work to interprete the general meaning of the principal components, the biplot allowed us to identify how the countries behave with respect to the components and eventually to the variables hence helping us to spot the sources of difference in the biocapacity in Europe.\
+
+We identify three reference clusters suggesting that European countries do not act according to their own standards but, on the contrary, they operate according to common rules even if in a different manner acting first on some factors than others following their national plans but aiming to reach common goals. The fact that cluster are a bit overlapping could be due to the fact that all of the six variables are correlated each other, making it less clear which factors is more decisive. Anyway, countries in cluster 1, having a high mean in built up land, should focus more on finding a balance in the exploitation of available lands. A suggestion for countries in cluster 2 is to review the allocation of free lands and to reduce polluting emission. Finally, countries in cluster 3 should be put more effort in carrying on a variety of activities instead of only one to avoid collapse.  \
+
+Despite the fact that all variables are correlated, we can conclude that variables with higher impact are: carbon and forest land, crop land and fishing ground (high coefficients in first 3 components). Why these? Because, as said before, carbon affect positively all other variables, particularly grazing land and fishing gournd. \
+Population density is also a factor that should be included when talking about a country total footprint, since high density means sometimes more requests than supplies. Unfortunately this record is not in NFA dataset. \
+From the map below we see that France, Italy, Austria, Germany, Finland, Sweden, Hungary and Romania are still asking more and more from Earth at the expense of a quite high impact on biocapacity. Trying to adapt themselves to European Standard, maybe until 2030 countries with high values in carbon and forest land will be able to reduce their greenhous gas emission, particurarly CO2. \
+
+This work could be a starting point for further analysis to use when taking decision related to our Earth. A sustainable future will not occur spontaneously. In the absence of urgent and concerted action, rapid growth and inefficient use of natural resources will continue to create unsustainable pressures on the environment. \
+\
+```{r biocap map, echo=FALSE, fig.align="center", warning=FALSE, message=FALSE}
+library(gridExtra)
+worldmap<- map_data("world")
+ourmap_2016 <- map_data("world", region=unique(cons_tot2016$country))
+eu_2016 <- merge(ourmap_2016, europe2016, by.x = "region", by.y="country")
+worldmap_2016 <- eu_2016[order(eu_2016$group, eu_2016$order),]
+theme_set(theme_bw())
+
+
+bio <- ggplot(worldmap_2016, aes(x=long, y=lat, group=group)) + 
+  geom_polygon(aes(fill=total), color="black") +  
+  scale_fill_gradient(low="green",high="firebrick") +
+  ggtitle("2016 Ecological Footprint") +
+  coord_map("ortho",orientation=c(30,20,0))
+
+bio
+```
+\
+*Remark*: to each country is assigned a quality score related to the trusthworness of data collection for a specific country. In the reduced dataset used, quality score are 3A, 2A, 2B being 3A the most reliable. 2A-2B means that some time series values have results that are very unreliable or very unlikely, except in the latest data year, which is the one we used. \
+
+
+[id]:https://data.world/footprint/nfa-2019-edition 
+
+
+## References
+**Global Footprint**: https://www.footprintnetwork.org \
+**European Commission**:https://ec.europa.eu/transparency/regdoc/rep/1/2018/IT/COM-2018-716-F1-IT-MAIN-PART-1.PDF \
+**20-20-20 Stratey** : https://ec.europa.eu/clima/policies/strategies/2020_it \
+**European Commission - Paris Agreement**:https://ec.europa.eu/clima/policies/international/negotiations/paris_it
+
+
